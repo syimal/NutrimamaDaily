@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Nutrimamadaily"
         tools:targetApi="31">
         <activity
+            android:name=".ItemRiwayat"
+            android:exported="false" />
+        <activity
             android:name=".DataClass2"
             android:exported="false" />
         <activity

@@ -1,20 +1,31 @@
 package com.example.nutrimamadaily
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class RiwayatActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_riwayat)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        setContentView(R.layout.activity_riwayat)  // Pastikan ini merujuk ke layout yang sesuai
+
+        val rvHistory: RecyclerView = findViewById(R.id.rvHistory)
+
+        // Contoh Data Makan, sesuaikan dengan data yang sebenarnya
+        val makan = mutableListOf(
+            Item("Sate", "24 November 2023 10:24:06"),
+            Item("Nasi Ayam", "24 November 2023 10:24:06"),
+            Item("Mie Goreng", "25 November 2023 11:45:08")
+        )
+
+        // Menyiapkan RecyclerView dengan LinearLayoutManager
+        rvHistory.layoutManager = LinearLayoutManager(this)
+        rvHistory.adapter = DonationAdapter(makan) { item ->
+            // Aksi hapus item ketika tombol hapus diklik
+            makan.remove(item)
+            rvHistory.adapter?.notifyDataSetChanged()
         }
     }
 }
