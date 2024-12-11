@@ -96,6 +96,7 @@
 
         <!-- Bottom Face Icon -->
         <ImageView
+            android:id="@+id/utama"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"

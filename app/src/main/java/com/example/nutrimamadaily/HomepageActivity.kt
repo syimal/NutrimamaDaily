@@ -63,6 +63,14 @@ class HomepageActivity : AppCompatActivity() {
             val intent = Intent(this, RiwayatActivity::class.java)
             startActivity(intent)
         }
+
+        // Set the OnClickListener for the Diary image
+        val diaryImage: ImageView = findViewById(R.id.utama)
+        diaryImage.setOnClickListener {
+            // When clicked, open UtamaActivity
+            val intent = Intent(this, UtamaActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupIndicators(indicators: LinearLayout, count: Int) {
