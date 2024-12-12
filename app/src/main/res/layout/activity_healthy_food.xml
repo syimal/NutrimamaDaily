@@ -11,7 +11,8 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageButton
+        <!-- Mengganti ImageButton menjadi ImageView -->
+        <ImageView
             android:id="@+id/imagepage1"
             android:layout_width="382dp"
             android:layout_height="324dp"
@@ -36,9 +37,10 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Daftar CheckBox -->
         <CheckBox
             android:id="@+id/cbHealthy1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nasi" />
 
@@ -222,6 +224,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pudding Buah"/>
+
         <Button
             android:id="@+id/BtnOke1"
             android:layout_width="149dp"

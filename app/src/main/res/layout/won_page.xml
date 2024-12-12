@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
+    android:padding="16dp"
     android:background="@color/white">
 
     <!-- Circular Progress Bar -->
@@ -38,5 +39,6 @@
         android:backgroundTint="#FF122E"
         android:textColor="@android:color/white"
         android:padding="12dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_gravity="center" />
 </LinearLayout>

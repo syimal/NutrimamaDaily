@@ -9,13 +9,12 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- ImageButton dengan contentDescription untuk aksesibilitas -->
-    <ImageButton
+    <ImageView
         android:id="@+id/imagepage4"
         android:layout_width="382dp"
         android:layout_height="300dp"
-        app:srcCompat="@drawable/ic_jumlahmakanan"
-        android:contentDescription="Gambar jumlah makanan" />
+        android:src="@drawable/ic_jumlahmakanan"
+        android:scaleType="fitXY"/>
 
     <LinearLayout
         android:id="@+id/linearlayout"
@@ -35,38 +34,31 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Progress TextView -->
-    <TextView
-        android:id="@+id/tvProgressText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="Progres: 0%"
-        android:textColor="#FF122E"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <!-- RadioButton -->
-    <RadioButton
-        android:id="@+id/rbSatu"
+    <RadioGroup
+        android:id="@+id/rgJumlahPorsi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Satu Porsi" />
+        android:orientation="vertical">
 
-    <RadioButton
-        android:id="@+id/rbDua"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Setengah Porsi" />
+        <RadioButton
+            android:id="@+id/rbSatu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Satu Porsi" />
 
-    <RadioButton
-        android:id="@+id/rbTiga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Seperempat Porsi" />
+        <RadioButton
+            android:id="@+id/rbDua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Setengah Porsi" />
 
-    <!-- Button dengan padding untuk memperbesar target sentuh -->
+        <RadioButton
+            android:id="@+id/rbTiga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seperempat Porsi" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/BtnSubmit"
         android:layout_width="wrap_content"

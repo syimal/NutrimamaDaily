@@ -14,45 +14,48 @@ class WonPage : AppCompatActivity() {
     private lateinit var circularProgressBar: CircularProgressBar
     private var progress = 0
     private val handler = Handler(Looper.getMainLooper())
+    private var isNavigating = false // Untuk mencegah navigasi ganda
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.won_page) // Ganti dengan nama layout Anda jika berbeda
+        setContentView(R.layout.won_page) // Pastikan layout sesuai
 
         // Ambil data progress dari Intent
-        val totalProgress = intent.getIntExtra("progress", 0)
+        val totalProgress = intent.getIntExtra("progress", 0).coerceAtMost(100) // Batas maksimum 100
 
         // Referensi elemen UI
         circularProgressBar = findViewById(R.id.circularProgressBar)
         val tvFinalProgress = findViewById<TextView>(R.id.tvFinalProgress)
+        val btnStartPlan = findViewById<Button>(R.id.btnStartPlan)
 
-        // Set text untuk progres yang diterima
+        // Set teks untuk progres yang diterima
         tvFinalProgress.text = "Progres Anda: $totalProgress%"
 
-        // Set up the button for navigation
-        val btnStartPlan = findViewById<Button>(R.id.btnStartPlan)
+        // Tombol navigasi
         btnStartPlan.setOnClickListener {
-            Toast.makeText(this, "Navigating to the next page...", Toast.LENGTH_SHORT).show()
+            if (!isNavigating) {
+                isNavigating = true
+                Toast.makeText(this, "Navigasi ke halaman berikutnya...", Toast.LENGTH_SHORT).show()
 
-            // Navigasi ke SummaryActivity atau activity lainnya
-            val intent = Intent(this, SummaryActivity::class.java) // Ganti dengan nama activity yang sesuai
-            startActivity(intent)
+                // Navigasi ke SummaryActivity atau halaman lain
+                val intent = Intent(this, SummaryActivity::class.java) // Ubah sesuai activity tujuan
+                startActivity(intent)
+            }
         }
 
-        // Simulasikan progress bar dengan nilai yang didapat dari totalProgress
+        // Simulasikan progress bar
         simulateProgress(totalProgress)
     }
 
-    private fun simulateProgress(totalProgress: Int) {
-        Thread {
-            var currentProgress = 0
-            while (currentProgress < totalProgress) {
-                currentProgress += 1
-                handler.post {
-                    circularProgressBar.setProgress(currentProgress)
+    private fun simulateProgress(targetProgress: Int) {
+        handler.post(object : Runnable {
+            override fun run() {
+                if (progress < targetProgress) {
+                    progress++
+                    circularProgressBar.setProgress(progress)
+                    handler.postDelayed(this, 50) // Update setiap 50ms
                 }
-                Thread.sleep(50) // Simulate progress delay
             }
-        }.start()
+        })
     }
 }

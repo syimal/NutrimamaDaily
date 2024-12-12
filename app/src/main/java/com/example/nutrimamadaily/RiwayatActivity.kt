@@ -22,7 +22,7 @@ class RiwayatActivity : AppCompatActivity() {
 
         // Menyiapkan RecyclerView dengan LinearLayoutManager
         rvHistory.layoutManager = LinearLayoutManager(this)
-        rvHistory.adapter = DonationAdapter(makan) { item ->
+        rvHistory.adapter = ItemAdapter(makan) { item ->
             // Aksi hapus item ketika tombol hapus diklik
             makan.remove(item)
             rvHistory.adapter?.notifyDataSetChanged()

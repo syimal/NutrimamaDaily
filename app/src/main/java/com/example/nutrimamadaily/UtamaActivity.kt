@@ -16,14 +16,20 @@ class UtamaActivity : AppCompatActivity() {
 
         // Listener untuk tombol "Makanan Sehat"
         btnHealthy.setOnClickListener {
-            val intent = Intent(this@UtamaActivity, HealthyFoodActivity::class.java)
-            startActivity(intent)
+            startFoodActivity(HealthyFoodActivity::class.java, 25)  // Kirim 25 poin untuk sehat
         }
 
         // Listener untuk tombol "Makanan Tidak Sehat"
         btnUnHealthy.setOnClickListener {
-            val intent = Intent(this@UtamaActivity, UnhealthyFoodActivity::class.java)
-            startActivity(intent)
+            startFoodActivity(UnhealthyFoodActivity::class.java, 25)  // Kirim 25 poin untuk tidak sehat
         }
     }
+
+    // Fungsi untuk mengirim Intent dengan nilai poin
+    private fun startFoodActivity(activity: Class<*>, points: Int) {
+        val intent = Intent(this@UtamaActivity, activity)
+        intent.putExtra("points", points)  // Mengirimkan nilai poin ke activity tujuan
+        startActivity(intent)
+    }
+
 }

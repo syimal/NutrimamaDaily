@@ -4,49 +4,52 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class HealthyFoodActivity : AppCompatActivity() {
 
-    private var selectedHealthyCount = 0
+    private var initialPoints = 0 // Untuk menyimpan poin awal (dari UtamaActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_healthy_food)
 
-        val checkBoxes = ArrayList<CheckBox>()
+        // Mendapatkan nilai poin yang dikirim dari UtamaActivity
+        initialPoints = intent.getIntExtra("points", 0)
+
+        // Mengumpulkan semua CheckBox dengan ID dinamis
+        val checkBoxes = mutableListOf<CheckBox>()
         for (i in 1..36) {
             val checkBoxId = resources.getIdentifier("cbHealthy$i", "id", packageName)
-            val checkBox = findViewById<CheckBox>(checkBoxId)
-            checkBoxes.add(checkBox)
+            val checkBox = findViewById<CheckBox?>(checkBoxId)
+            if (checkBox != null) {
+                checkBoxes.add(checkBox)
+            }
         }
 
         val btnOke1 = findViewById<Button>(R.id.BtnOke1)
 
+        // Ketika tombol "Next" ditekan
         btnOke1.setOnClickListener {
-            selectedHealthyCount = 0
-            val selectedItems = StringBuilder("You selected:\n")
+            val selectedItems = StringBuilder("Makanan Sehat yang Anda Pilih:\n")
+            var selectedHealthyCount = 0
 
-            for (i in 0 until checkBoxes.size) {
-                if (checkBoxes[i].isChecked) {
-                    selectedItems.append("${getFoodName(i + 1)}\n")
+            // Loop untuk mengecek makanan sehat yang dipilih
+            for ((index, checkBox) in checkBoxes.withIndex()) {
+                if (checkBox.isChecked) {
+                    selectedItems.append("${getFoodName(index + 1)}\n")
                     selectedHealthyCount++
                 }
             }
 
-            // Menampilkan Toast dengan jumlah yang dipilih
-            Toast.makeText(
-                this@HealthyFoodActivity,
-                "Selected Healthy Foods: $selectedHealthyCount",
-                Toast.LENGTH_LONG
-            ).show()
+            // Tambahkan 50 poin untuk tombol ini
+            val progress = initialPoints + 50 // Poin ditambahkan berdasarkan tombol
 
-            // Hitung progress untuk makanan sehat (25%)
-            val progress = (selectedHealthyCount * 50) // Misalnya 25% untuk setiap makanan sehat yang dipilih
-            val intent = Intent(this, JumlahMakananActivity::class.java)
-            intent.putExtra("selected_healthy_food_count", selectedHealthyCount)
-            intent.putExtra("progress_healthy", progress)
+            // Pindah ke JumlahMakananActivity dengan data yang dikirim
+            val intent = Intent(this, JumlahMakananActivity::class.java).apply {
+                putExtra("progress_healthy", progress) // Poin yang sudah dihitung
+                putExtra("selected_healthy_items", selectedItems.toString()) // Mengirim daftar makanan sehat yang dipilih
+            }
             startActivity(intent)
         }
     }
@@ -74,7 +77,7 @@ class HealthyFoodActivity : AppCompatActivity() {
             19 -> "Rujak Buah"
             20 -> "Bubur Sum-Sum"
             21 -> "Bubur Ketan Hitam"
-            22 -> "Sop daging"
+            22 -> "Sop Daging"
             23 -> "Udang Saus Padang"
             24 -> "Kepiting Saus Padang"
             25 -> "Cumi Asam Manis"
@@ -89,7 +92,7 @@ class HealthyFoodActivity : AppCompatActivity() {
             34 -> "Ayam Rica-Rica"
             35 -> "Tumis Tahu Tempe"
             36 -> "Pudding Buah"
-            else -> "Unknown Food"
+            else -> "Makanan Tidak Diketahui"
         }
     }
 }
